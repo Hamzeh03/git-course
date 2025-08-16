@@ -1,1 +1,6 @@
 add and remove user
+
+change the roles
+manage the data base
+
+closinh the connection
