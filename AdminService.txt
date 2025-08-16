@@ -3,7 +3,11 @@ add and remove user
 change the roles
 manage the data base
 
+<<<<<<< HEAD
 closing the orcale data base  connection
+=======
+closing the mysql  data base  connection
+>>>>>>> 6e1b04f50df219096d3e2e0e995fdb6ba1b40040
 
 
 change 1 
