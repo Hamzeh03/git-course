@@ -3,8 +3,9 @@ add and remove user
 change the roles
 manage the data base
 
-closinh the connection
+closing the data base  connection
 
 
 change 1 
 change 2 in hamzeh data base
+
