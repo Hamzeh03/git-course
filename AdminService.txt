@@ -3,7 +3,7 @@ add and remove user
 change the roles
 manage the data base
 
-closing the data base  connection
+closing the orcale data base  connection
 
 
 change 1 
