@@ -1,1 +1,114 @@
-"# git-course demo" 
+GIT COMMANDS
+
+
+git init                 	 -> create a new empty repo (default branch is master)
+git init -b main         	 -> create a new empty repo with branch name main
+
+
+
+git status           		 -> show current branch, staged/unstaged files, untracked files
+
+
+
+echo "# git-course" >> README.md -> create README.md with text inside
+
+
+
+git add FileName         	 -> stage a specific file
+git add .               	 -> stage all changes
+
+
+
+git commit -m "msg"       	-> commit staged changes with a message
+git commit -a -m "msg"    	-> commit tracked files directly (skip staging new files)
+			    	 it works only for already tracked files (new files still require git add).
+
+
+
+
+git log                  	-> show commit history
+	git log --oneline       -> show commits in one line each
+	git log --graph         -> show commits in a tree layout
+	git log --all           -> show commits from all branches
+	git log --decorate      -> show branch/tag names alongside commits
+	gitk                    -> open commit history in a GUI
+
+
+
+
+git diff                  	-> show changes since the last commit
+	git diff --staged       -> show staged changes (added but not yet committed)
+
+
+
+
+git rm NameOfFile         	-> remove file from repo, staging area, and working folder
+git rm --cached NameOfFile	-> stop tracking file in Git but keep it in working folder
+
+
+
+git remote add origin <repo-url> -> connect local repo to GitHub repo
+
+
+
+
+git push -u origin main   	-> push branch to GitHub for the first time & set upstream
+git push origin main      	-> push new commits (after upstream is set)
+
+
+
+
+git tag                   	-> list all tags
+git tag -a v1.0 -m "msg"  	-> create an annotated tag (stores author, date, message)
+git tag v1.1              	-> create a lightweight tag (just a label, no message)
+git push origin v1.1      	-> push a specific tag to GitHub
+git show v1.1             	-> show details about the tag and its commit(author, date, commit)
+
+
+
+
+
+git clone <repo-url>      	-> download a GitHub repo to your computer
+
+
+
+
+git branch                	-> list branches (current branch marked with *)
+git branch --all          	-> list local and remote branches
+git checkout 3a5de3d		-> travel for this commit ( the head be there )
+git checkout -b feature1  	-> create and switch to new branch
+git switch -c feature2    	-> same as above (newer command)
+git switch main           	-> switch to main branch
+git switch -              	-> switch back to previous branch(dash means "previous")
+git branch -d feature2    	-> delete a local branch
+
+
+
+git diff > file.patch 		-> save your changes into a patch file that can be shared or applied later
+git apply file.patch 		-> apply the changes from a patch file to your working directory
+
+
+
+
+git push origin feature1  	-> push branch feature1 to GitHub
+git merge feature1        	-> merge feature1 branch into current branch (e.g., main)
+				   keep the graph like it was and connect the last commit of branch with main
+
+
+git rebase feature3		-> reapply the commits of current branch on top of feature3 branch
+				   connect all commit from branch above of main , the graph look one line
+
+
+CONFLICT			-> when the same file is modified in two branches and you try to merge or 				   rebase; Git stops and asks you to manually choose which changes to keep
+
+
+git pull origin main		-> if you make a change from GitHub repo or want to update your project from 				   new GitHub you pull them and that make merge to your local main branch
+
+
+git stash 			-> temporarily save your local changes without committing so you can work on a 				   clean branch
+	git stash save "optional message"   -> stash changes with a message
+	git stash list                      -> see all stashes
+	git stash apply                     -> reapply the latest stash (keep it in stash)
+	git stash pop                       -> reapply and remove the latest stash
+	git stash drop stash@{0}            -> remove a specific stash
+
