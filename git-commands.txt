@@ -12,10 +12,18 @@ git status           		 -> show current branch, staged/unstaged files, untracked
 
 echo "# git-course" >> README.md -> create README.md with text inside
 
+ls 							 -> show what files are in folder
+ls README.MD                 -> show what this file contact
+
+
 
 
 git add FileName         	 -> stage a specific file
 git add .               	 -> stage all changes
+git add -all 				 -> stage all file that have changes only
+
+git reset HEAD FileName   	 -> UnStage this file 
+
 
 
 
@@ -43,10 +51,11 @@ git diff                  	-> show changes since the last commit
 
 git rm NameOfFile         	-> remove file from repo, staging area, and working folder
 git rm --cached NameOfFile	-> stop tracking file in Git but keep it in working folder
+git rm -f NameOfFile 		-> remove file from staging area
 
 
-
-git remote add origin <repo-url> -> connect local repo to GitHub repo
+git remote -v 				-> show connection
+git remote add origin Repo_Url -> connect local repo to GitHub repo
 
 
 
@@ -73,6 +82,7 @@ git clone <repo-url>      	-> download a GitHub repo to your computer
 
 
 git branch                	-> list branches (current branch marked with *)
+git branch BranchName		-> Make new Branch 
 git branch --all          	-> list local and remote branches
 git checkout 3a5de3d		-> travel for this commit ( the head be there )
 git checkout -b feature1  	-> create and switch to new branch
@@ -109,3 +119,20 @@ git stash 			-> temporarily save your local changes without committing so you ca
 	git stash pop                       -> reapply and remove the latest stash
 	git stash drop stash@{0}            -> remove a specific stash
 
+
+
+
+########## IN PR ##########
+
+main:      A---B
+feature:       \---C---D
+
+Merge Commit ("Create a merge commit")
+  main:      A---B---M
+                 \---C---D
+
+Squash and Merge ("Squash and merge")
+main:      A---B---S
+
+Rebase and Merge ("Rebase and merge")
+main:      A---B---C---D
