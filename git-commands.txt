@@ -22,6 +22,7 @@ git add FileName         	 -> stage a specific file
 git add .               	 -> stage all changes
 git add -all 				 -> stage all file that have changes only
 
+git reset file.txt           # Unstage a file
 git reset HEAD FileName   	 -> UnStage this file 
 
 
@@ -30,7 +31,11 @@ git reset HEAD FileName   	 -> UnStage this file
 git commit -m "msg"       	-> commit staged changes with a message
 git commit -a -m "msg"    	-> commit tracked files directly (skip staging new files) it works only for already tracked files (new files still require git add).
 
+git reset --soft HEAD~1     -> Undo last commit, keep changes staged
+git reset --mixed HEAD~1    -> Undo last commit, keep changes unstaged
+git reset --hard HEAD~1     -> Undo last commit + delete changes
 
+git revert <commit-hash>    -> Create new commit that undoes a commit (safe for shared branches)
 
 
 git log                  	-> show commit history
@@ -38,6 +43,11 @@ git log                  	-> show commit history
 	git log --graph         -> show commits in a tree layout
 	git log --all           -> show commits from all branches
 	git log --decorate      -> show branch/tag names alongside commits
+	git show <commit-hash>  -> Show details of a commit
+
+
+	git log --graph --oneline --all   -> Visual graph of branches
+
 	gitk                    -> open commit history in a GUI
 
 
@@ -55,21 +65,25 @@ git rm -f NameOfFile 		-> remove file from staging area
 
 
 git remote -v 				-> show connection
-git remote add origin Repo_Url -> connect local repo to GitHub repo
-
-
+git remote add origin Repo_Url      -> connect local repo to GitHub repo
 
 
 git push -u origin main   	-> push branch to GitHub for the first time & set upstream
 git push origin main      	-> push new commits (after upstream is set)
+git push  					-> Push changes
 
+git push origin --delete feature1   -> Delete remote branch
 
+git fetch                   -> Get remote updates (no merge)
+git pull                    -> Fetch + merge
+git pull --rebase           -> Fetch + rebase (cleaner history)
 
 
 git tag                   	-> list all tags
 git tag -a v1.0 -m "msg"  	-> create an annotated tag (stores author, date, message)
 git tag v1.1              	-> create a lightweight tag (just a label, no message)
 git push origin v1.1      	-> push a specific tag to GitHub
+git push origin --tags      -> Push all tags
 git show v1.1             	-> show details about the tag and its commit(author, date, commit)
 
 
@@ -83,13 +97,18 @@ git clone <repo-url>      	-> download a GitHub repo to your computer
 
 git branch                	-> list branches (current branch marked with *)
 git branch BranchName		-> Make new Branch 
-git branch --all          	-> list local and remote branches
-git checkout 3a5de3d		-> travel for this commit ( the head be there )
-git checkout -b feature1  	-> create and switch to new branch
-git switch -c feature2    	-> same as above (newer command)
-git switch main           	-> switch to main branch
-git switch -              	-> switch back to previous branch(dash means "previous")
 git branch -d feature2    	-> delete a local branch
+git branch -D BranchName    -> Force delete local branch
+git branch --all          	-> list local and remote branches
+git branch -m new-name      -> Rename current branch
+
+git checkout BranchName      # Switch to branch (old style)
+git checkout -b feature1  	-> create and switch to new branch
+git checkout 3a5de3d		-> travel for this commit ( the head be there )
+
+git switch main           	-> switch to main branch
+git switch -c feature2    	-> same as above (newer command)
+git switch -              	-> switch back to previous branch(dash means "previous")
 
 
 
