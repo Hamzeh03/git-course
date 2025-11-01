@@ -1,0 +1,87 @@
+🚀 1. Repository Setup
+git init                     # Start new repo
+git clone <repo-url>         # Copy repo from GitHub
+
+
+
+📝 2. File Tracking
+git status                   # Show changes
+git add .                    # Stage all changes
+git commit -m "message"      # Commit staged files
+git log --oneline --graph    # View history
+
+
+
+🌿 3. Branching
+git branch                   # List branches
+git switch -c feature-x      # Create + switch
+git switch main              # Go back to main
+git branch -d feature-x      # Delete branch
+
+
+
+🔀 4. Merging & Updating
+git merge feature-x          # Merge into current branch
+git pull                     # Get latest changes
+git push                     # Push commits to GitHub
+
+
+Optional:
+
+git pull --rebase            # Keep linear history
+git fetch                    # Just download updates (no merge)
+
+
+
+💾 5. Undoing & Fixing
+git restore file.txt         # Discard unstaged change
+git restore --staged file.txt # Unstage file
+git reset --soft HEAD~1      # Undo last commit, keep changes staged
+git reset --hard HEAD~1      # Undo and delete changes
+git revert <commit>          # Safe undo (creates new commit)
+git reflog                   # See all HEAD history (rescue lost work)
+
+
+
+⚙️ 6. Remote Management
+git remote -v                # Show connected remotes
+git remote add origin <url>  # Link local repo to GitHub
+git push -u origin main      # Push first time + set upstream
+git push origin --delete feature-x  # Delete remote branch
+
+
+
+🏷️ 7. Tags (for versions)
+git tag v1.0                 # Lightweight tag
+git tag -a v1.0 -m "msg"     # Annotated tag
+git push origin v1.0         # Push tag
+git show v1.0                # Tag details
+
+
+
+
+🧳 8. Stash (pause work)
+git stash                    # Save uncommitted work
+git stash list               # Show stashes
+git stash pop                # Restore & delete
+
+
+
+🔍 9. View & Compare
+git diff                     # Compare working changes
+git diff --staged            # Compare staged vs last commit
+git show <commit>            # View a specific commit
+git blame file.txt           # Who changed each line
+
+
+
+
+🧠 10. Everyday Config
+git config --global user.name "Your Name"
+git config --global user.email "you@email.com"
+git config --global alias.lg "log --oneline --graph --decorate --all"
+
+
+
+✅ That’s it.
+This list covers what 90% of devs use weekly — creating, committing, branching, merging, undoing, syncing, tagging, and viewing.

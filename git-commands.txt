@@ -20,9 +20,10 @@ ls README.MD                 -> show what this file contact
 
 git add FileName         	 -> stage a specific file
 git add .               	 -> stage all changes
-git add -all 				 -> stage all file that have changes only
+git add --all 				 -> stage all file that have changes only
+		OR git add -A
 
-git reset file.txt           # Unstage a file
+git reset file.txt           -> Unstage a file
 git reset HEAD FileName   	 -> UnStage this file 
 
 
@@ -31,9 +32,15 @@ git reset HEAD FileName   	 -> UnStage this file
 git commit -m "msg"       	-> commit staged changes with a message
 git commit -a -m "msg"    	-> commit tracked files directly (skip staging new files) it works only for already tracked files (new files still require git add).
 
+git commit --amend                 -> edit last commit (message or staged files)
+git commit --amend --no-edit       -> keep message, add staged changes
+
+
 git reset --soft HEAD~1     -> Undo last commit, keep changes staged
 git reset --mixed HEAD~1    -> Undo last commit, keep changes unstaged
 git reset --hard HEAD~1     -> Undo last commit + delete changes
+
+
 
 git revert <commit-hash>    -> Create new commit that undoes a commit (safe for shared branches)
 
@@ -45,32 +52,71 @@ git log                  	-> show commit history
 	git log --decorate      -> show branch/tag names alongside commits
 	git show <commit-hash>  -> Show details of a commit
 
+	git grep "pattern"                 -> search tracked files
+	git log -S "added_or_removed_text" -> find commits that changed a given string
+	git log -G "regex"                 -> regex-based history search
+
+
+	git log -p -2                      -> Show last 2 commits with diffs
+	git log --since="1 week ago"       -> Filter by date
+	git log --author="Hamzeh"          -> Filter by author
 
 	git log --graph --oneline --all   -> Visual graph of branches
 
 	gitk                    -> open commit history in a GUI
+
+git shortlog -s -n                 -> List commits per contributor
+
+
+
+
+git restore file.txt                  -> Discard unstaged changes
+git restore --staged file.txt      	  -> Unstage file
+git restore --source=HEAD~1 file.txt  -> Restore file from older commit
 
 
 
 
 git diff                  	-> show changes since the last commit
 	git diff --staged       -> show staged changes (added but not yet committed)
+	git diff HEAD~1 HEAD --stat        -> Summary of changes
+	git diff --name-only               -> Show changed file names only
 
 
 
 
-git rm NameOfFile         	-> remove file from repo, staging area, and working folder
-git rm --cached NameOfFile	-> stop tracking file in Git but keep it in working folder
-git rm -f NameOfFile 		-> remove file from staging area
+git rm file               -> remove from index AND working tree
+git rm -f file            -> force removal (even if modified)
+git rm --cached file      -> stop tracking (keep file on disk)
+
 
 
 git remote -v 				-> show connection
 git remote add origin Repo_Url      -> connect local repo to GitHub repo
 
 
+git config --list                      		-> Show all configs
+git config --global user.name "Hamzeh"
+git config --global user.email "you@email.com"
+git config --global core.editor "code --wait"
+git config --global pull.rebase true   		-> Default to rebase on pull
+
+git config --global init.defaultBranch main
+
+->Save time with custom commands.
+git config --global alias.st status
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.lg "log --oneline --graph --decorate --all"
+
+
+
 git push -u origin main   	-> push branch to GitHub for the first time & set upstream
 git push origin main      	-> push new commits (after upstream is set)
 git push  					-> Push changes
+
+
+
 
 git push origin --delete feature1   -> Delete remote branch
 
@@ -86,6 +132,8 @@ git push origin v1.1      	-> push a specific tag to GitHub
 git push origin --tags      -> Push all tags
 git show v1.1             	-> show details about the tag and its commit(author, date, commit)
 
+git tag -d v1.1
+git push origin :refs/tags/v1.1
 
 
 
@@ -101,14 +149,29 @@ git branch -d feature2    	-> delete a local branch
 git branch -D BranchName    -> Force delete local branch
 git branch --all          	-> list local and remote branches
 git branch -m new-name      -> Rename current branch
+git branch -m old-name new-name -> Rename Branch
+			git push origin :old-name
+			git push -u origin new-name
+git branch -vv 				-> View remote-tracking branches
+git branch --set-upstream-to=origin/main main  -> Track upstream manually
 
-git checkout BranchName      # Switch to branch (old style)
+
+git checkout BranchName     -> Switch to branch (old style)
 git checkout -b feature1  	-> create and switch to new branch
 git checkout 3a5de3d		-> travel for this commit ( the head be there )
 
 git switch main           	-> switch to main branch
 git switch -c feature2    	-> same as above (newer command)
 git switch -              	-> switch back to previous branch(dash means "previous")
+git switch -c rescue HEAD@{3}  -> Recover from a previous state
+
+git reflog                  -> Show all recent HEAD movements
+
+
+git cherry-pick <commit-hash>    ->
+git cherry-pick <hash1> <hash2>  ->Apply one or more commits from another branch without merging.
+git cherry-pick <hash> [<hash2> ...]   -> apply commits onto current branch
+
 
 
 
@@ -139,6 +202,47 @@ git stash 			-> temporarily save your local changes without committing so you ca
 	git stash drop stash@{0}            -> remove a specific stash
 
 
+git blame src/app.js  		 -> Find who changed a line and which commit broke the code.
+
+git bisect start
+git bisect bad                 -> current commit is broken
+git bisect good v1.0.0         -> older known good commit
+-> Git checks out middle commit each time — test, mark good/bad until found
+git bisect reset
+
+
+########## Clean up & Maintenance ##########
+
+##Remove unused branches and files safely.##
+
+git branch --merged            # List branches already merged
+git branch -d old-branch       # Delete safely
+git gc                         # Cleanup unnecessary files and optimize
+git prune                      # Remove unreachable objects
+git clean -fd                  # Delete untracked files and dirs
+
+
+
+git push origin --delete branch-name       # Delete remote branch
+git remote prune origin                    # Clean up stale remote branches
+git fetch --all --prune                    # Full sync and cleanup
+git push --force-with-lease                # Safe force push
+
+
+####### Submodules (for advanced multi-repo setups) #######
+git submodule add <repo-url> path/
+git submodule update --init --recursive
+git submodule foreach git pull origin main
+
+################################### #########################################################
+| Problem                          | Solution                                               |
+| -------------------------------- | ------------------------------------------------------ |
+| Committed wrong branch           | `git switch correct-branch` → `git cherry-pick <hash>` |
+| Undo last merge                  | `git revert -m 1 <merge-hash>`                         |
+| Recover deleted branch           | `git reflog` → `git branch restore <sha>`              |
+| Merge conflict                   | Edit, `git add`, `git merge --continue`                |
+| Push rejected (non-fast-forward) | `git pull --rebase`                                    |
+| Accidentally force pushed        | `git reflog origin/main` (if reflog enabled on remote) |
 
 
 ########## IN PR ##########
@@ -155,3 +259,9 @@ main:      A---B---S
 
 Rebase and Merge ("Rebase and merge")
 main:      A---B---C---D
+
+
+git merge --abort
+git rebase --continue
+git rebase --skip
+git rebase --abort
